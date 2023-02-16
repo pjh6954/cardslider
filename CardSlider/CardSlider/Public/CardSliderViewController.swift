@@ -282,6 +282,32 @@ extension CardSliderViewController: CardsLayoutDelegate {
 		let nextTitle = CardTitle(title: nextItem.title, subtitle: nextItem.subtitle)
 		cardTitleView.transition(between: currentTitle, secondTitle: nextTitle, progress: progress)
 	}
+    
+    func chooseBestSum(_ t: Int, _ k: Int, _ ls: [Int]) -> Int {
+      // your code
+      guard ls.count >= k else {
+        return -1
+      }
+      // get all combinations
+        let result = combination(total: ls, shouldSelect: k, current: 0, selected: []) { value in
+            print(value)
+        }
+      return -1
+    }
+
+    func combination(total: [Int], shouldSelect: Int, current index: Int, selected: [Int], completion: @escaping([Int]) -> Void) {
+        if shouldSelect == 0 {
+            print(selected)
+            completion(selected)
+        } else if index == total.count {
+            return
+        } else {
+            var newSelected = selected
+            newSelected.append(total[index])
+            combination(total: total, shouldSelect: shouldSelect-1, current: index+1, selected: newSelected, completion: completion)
+            combination(total: total, shouldSelect: shouldSelect, current: index+1, selected: selected, completion: completion)
+        }
+    }
 }
 
 private final class BundleToken {}
